@@ -5,7 +5,6 @@ const app = express()
 app.use(express.json())
 app.use(morgan('tiny'))
 
-
 const persons = [
     { 
       "id": "1",
@@ -90,14 +89,14 @@ app.post('/api/persons', (request, response, next) => {
 
     response.json(person)
 
-    morgan.token('body', (req, res) => {
+    morgan.token('info', (req, res) => {
         return JSON.stringify(req.body)
     })
 
     next()
 })
 
-app.use(morgan(':body'))
+app.use('api/persons', morgan(':info'))
 
 const PORT = 3001
 app.listen(PORT, () => {
