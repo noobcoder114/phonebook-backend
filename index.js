@@ -129,7 +129,7 @@ const errorHandler = (error, request, response, next) => {
 app.use('api/persons', morgan(':info'))
 app.use(errorHandler)
 
-const PORT = 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
