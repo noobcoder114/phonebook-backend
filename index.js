@@ -38,8 +38,12 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-    response.writeHead(200, { 'Content-Type': 'text/plain' })
-    response.end(`Phonebook has info for ${persons.length} people\n${new Date()}`)
+    Person.countDocuments()
+        .then(result => {
+            response.writeHead(200, { 'Content-Type': 'text/plain' })
+            response.end(`Phonebook has info for ${persons.length} people\n${new Date()}`)
+        })
+        .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response) => {
