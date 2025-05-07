@@ -105,15 +105,15 @@ app.post('/api/persons', (request, response, next) => {
         number: number
     })
 
-    person.save().then(savedPerson => {
-        response.json(savedPerson)
-    })
+    person.save()
+        .then(savedPerson => {
+            response.json(savedPerson)
+        })
+        .catch(error => next(error))
 
     morgan.token('info', (req, res) => {
         return JSON.stringify(req.body)
     })
-
-    next()
 })
 
 const errorHandler = (error, request, response, next) => {
