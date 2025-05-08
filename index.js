@@ -83,22 +83,7 @@ app.post('/api/persons', (request, response, next) => {
     const name = body.name
     const number = body.number
     const names = persons.map(person => person.name)
-    if (!name && !number) {
-        return response.status(404).json({
-            error: 'name and number missing'
-        })
-    }
-    else if (!name) {
-        return response.status(404).json({
-            error: 'name missing'
-        })
-    }
-    else if (!number) {
-        return response.status(404).json({
-            error: 'number missing'
-        })
-    }
-    else if (names.includes(name)) {
+    if (names.includes(name)) {
         return response.status(404).json({
             error: 'name must be unique'
         })
@@ -125,6 +110,8 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).send({ error: error.message })
     }
 
     next(error)
